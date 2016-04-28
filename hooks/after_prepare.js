@@ -6,9 +6,11 @@ function findCryptoFiles(context, dir) {
     var fileList = [];
     var list = fs.readdirSync(dir);
     list.filter(function(file) {
-        return fs.statSync(path.join(dir, file)).isFile() && /.*\.(htm|html|js|css)$/.test(file);
+        return fs.statSync(path.join(dir, file)).isFile() && /.*\.(htm|html|js|css|scss)$/.test(file);
     }).forEach(function(file) {
-        fileList.push(path.join(dir, file));
+        //if(dir.indexOf('/Users/spencercampbell/Work/Luminate/apps/basscoast/platforms/android/assets/www/app') !== -1 || dir.indexOf('/Users/spencercampbell/Work/Luminate/apps/basscoast/platforms/android/assets/www/styles') !== -1) {
+        //fileList.push(path.join(dir, file));
+        //}
     });
     // sub dir
     list.filter(function(file) {
@@ -39,7 +41,7 @@ function replaceCryptKey_ios(pluginDir, key, iv) {
     var content = fs.readFileSync(sourceFile, 'utf-8');
 
     content = content.replace(/kCryptKey = @".*";/, 'kCryptKey = @"' + key + '";')
-                     .replace(/kCryptIv = @".*";/, 'kCryptIv = @"' + iv + '";');
+        .replace(/kCryptIv = @".*";/, 'kCryptIv = @"' + iv + '";');
 
     fs.writeFileSync(sourceFile, content, 'utf-8');
 }
@@ -52,7 +54,7 @@ function replaceCryptKey_android(pluginDir, key, iv) {
     var content = fs.readFileSync(sourceFile, 'utf-8');
 
     content = content.replace(/CRYPT_KEY = ".*";/, 'CRYPT_KEY = "' + key + '";')
-                     .replace(/CRYPT_IV = ".*";/, 'CRYPT_IV = "' + iv + '";');
+        .replace(/CRYPT_IV = ".*";/, 'CRYPT_IV = "' + iv + '";');
 
     fs.writeFileSync(sourceFile, content, 'utf-8');
 }

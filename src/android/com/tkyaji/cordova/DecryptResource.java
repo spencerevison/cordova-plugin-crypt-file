@@ -25,14 +25,20 @@ public class DecryptResource extends CordovaPlugin {
 
     private static final String URL_PREFIX = "http://localhost/";
 
-    private static final String CRYPT_KEY = "";
-    private static final String CRYPT_IV = "";
+    private static final String CRYPT_KEY = "vKFnTh30ZNe3wyg86J1YtfGo161hY+Zb";
+    private static final String CRYPT_IV = "dKAyVtW52650eiZq";
 
     private static final String[] CRYPT_FILES = {
         ".htm",
         ".html",
         ".js",
         ".css",
+        ".scss"
+    };
+
+    private static final String[] PATHS = {
+        "www/app",
+        "www/styles",
     };
 
     private String launchUri;
@@ -96,8 +102,10 @@ public class DecryptResource extends CordovaPlugin {
 
     private boolean isCryptFiles(String uri) {
         for (String ext: CRYPT_FILES) {
-            if (uri.endsWith(ext)) {
-                return true;
+            for (String filePath: PATHS) {
+                if (uri.endsWith(ext) && uri.toLowerCase().contains(filePath.toLowerCase())) {
+                    return true;
+                }
             }
         }
         return false;
