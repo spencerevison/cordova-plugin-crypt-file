@@ -9,7 +9,7 @@ function findCryptoFiles(context, dir) {
         return fs.statSync(path.join(dir, file)).isFile() && /.*\.(htm|html|js|css|scss)$/.test(file);
     }).forEach(function(file) {
         //if(dir.indexOf('/Users/spencercampbell/Work/Luminate/apps/basscoast/platforms/android/assets/www/app') !== -1 || dir.indexOf('/Users/spencercampbell/Work/Luminate/apps/basscoast/platforms/android/assets/www/styles') !== -1) {
-        //fileList.push(path.join(dir, file));
+        fileList.push(path.join(dir, file));
         //}
     });
     // sub dir
