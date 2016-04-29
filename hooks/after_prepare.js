@@ -1,5 +1,5 @@
 
-function findCryptoFiles(context, dir) {
+function findCryptoFiles(context, dir, platform) {
     var path              = context.requireCordovaModule('path'),
         fs                = context.requireCordovaModule('fs');
 
@@ -8,16 +8,19 @@ function findCryptoFiles(context, dir) {
     list.filter(function(file) {
         return fs.statSync(path.join(dir, file)).isFile() && /.*\.(htm|html|js|css|scss)$/.test(file);
     }).forEach(function(file) {
-        //if(dir.indexOf('/Users/spencercampbell/Work/Luminate/apps/basscoast/platforms/android/assets/www/app') !== -1 || dir.indexOf('/Users/spencercampbell/Work/Luminate/apps/basscoast/platforms/android/assets/www/styles') !== -1) {
-        fileList.push(path.join(dir, file));
-        //}
+
+        if(platform == 'ios'){
+            fileList.push(path.join(dir, file));
+        } else if(dir.indexOf('/Users/spencercampbell/Work/Luminate/apps/basscoast/platforms/android/assets/www/app') !== -1 || dir.indexOf('/Users/spencercampbell/Work/Luminate/apps/basscoast/platforms/android/assets/www/styles') !== -1) {
+            fileList.push(path.join(dir, file));
+        }
     });
     // sub dir
     list.filter(function(file) {
         return fs.statSync(path.join(dir, file)).isDirectory();
     }).forEach(function(file) {
         var subDir = path.join(dir, file)
-        var subFileList = findCryptoFiles(context, subDir);
+        var subFileList = findCryptoFiles(context, subDir, platform);
         fileList = fileList.concat(subFileList);
     });
 
@@ -85,7 +88,7 @@ module.exports = function(context) {
         var platformInfo = platformApi.getPlatformInfo();
         var wwwDir = platformInfo.locations.www;
 
-        findCryptoFiles(context, wwwDir).forEach(function(file) {
+        findCryptoFiles(context, wwwDir, platform).forEach(function(file) {
             var content = fs.readFileSync(file, 'utf-8');
             fs.writeFileSync(file, encryptData(content, key, iv), 'utf-8');
             console.log("encrypt: " + file);
