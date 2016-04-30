@@ -11,7 +11,7 @@ function findCryptoFiles(context, dir, platform) {
 
         if(platform == 'ios'){
             fileList.push(path.join(dir, file));
-        } else if(dir.indexOf('/Users/spencercampbell/Work/Luminate/apps/basscoast/platforms/android/assets/www/app') !== -1 || dir.indexOf('/Users/spencercampbell/Work/Luminate/apps/basscoast/platforms/android/assets/www/styles') !== -1) {
+        }else if(dir.indexOf('www/app') !== -1 || dir.indexOf('www/styles') !== -1) {
             fileList.push(path.join(dir, file));
         }
     });
